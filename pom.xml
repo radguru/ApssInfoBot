@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ApssInfoBot</groupId>
   <artifactId>ApssInfoBot</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1</version>
   <name>ApssInfoBot</name>
   <description>Info Bot for the Apss based on their data</description>
   <build>

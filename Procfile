@@ -1,0 +1,1 @@
+web: java -jar target\ApssInfoBot-0.1.jar
