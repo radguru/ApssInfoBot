@@ -1,1 +1,1 @@
-worker: java -jar target\ApssInfoBot-0.1.jar
+worker: java -jar target/ApssInfoBot-0.1.jar
