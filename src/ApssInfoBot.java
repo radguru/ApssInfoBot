@@ -43,7 +43,7 @@ public class ApssInfoBot extends TelegramLongPollingBot{
 				KeyboardRow row = new KeyboardRow();
 				//aggiungo i dati alla prima riga
 				row.add("impostazioni");
-				row.add("Ospedale più vicino");
+				row.add("Ospedale piu' vicino");
 				//aggiungo la riga alla lista
 				listkbm.add(row);
 				//associo la lista alla tastiera
