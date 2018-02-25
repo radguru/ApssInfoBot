@@ -30,7 +30,9 @@ public class ApssInfoBot extends TelegramLongPollingBot{
 			//uso switch e case -- troppi if-else-if poca efficienza
 			switch(mess) {
 			case "/markup":
-			default: 
+				break;
+			default:
+				//replica di default
 				defaultreply(mess,chat_id);
 				break;
 			
