@@ -1,3 +1,5 @@
+package net.odhb2018.apssinfobot;
+
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
