@@ -21,10 +21,23 @@
         <version>2.4</version>
         <configuration>
           <archive>
-            <manifestFile>MANIFEST.MF</manifestFile>
+            <manifestFile>MANIFEST.MF</manifestFile> <!-- Coustum Manifest -->
           </archive>
         </configuration>
       </plugin>
+      <!-- Run time dependencies -->
+      <plugin>
+		<groupId>com.jolira</groupId>
+		<artifactId>onejar-maven-plugin</artifactId>
+		<version>1.4.4</version>
+		<executions>
+		  <execution>
+			<goals>
+				<goal>one-jar</goal>
+			</goals>
+		  </execution>
+		</executions>
+	</plugin>
     </plugins>
   </build>
   <dependencies>

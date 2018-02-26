@@ -1,1 +1,1 @@
-worker: java -jar target/ApssInfoBot-0.1.jar net.odhb2018.apssinfobot.Main
+worker: java -jar target/ApssInfoBot-0.1.one-jar.jar
