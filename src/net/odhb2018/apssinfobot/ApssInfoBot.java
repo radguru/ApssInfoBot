@@ -4,7 +4,9 @@ import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Flag;
 import org.telegram.abilitybots.api.objects.Locality;
-import org.telegram.abilitybots.api.objects.Privacy;;
+import org.telegram.abilitybots.api.objects.Privacy;
+
+import net.odhb2018.apssinfobot.lib.AbilityCommand;
 
 public class ApssInfoBot extends AbilityBot{
 	
@@ -19,34 +21,6 @@ public class ApssInfoBot extends AbilityBot{
 	public int creatorId() {
 		return 137084354;
 	}
-
-	/*@Override
-	//onUpdateReceived --> viene richiamata con qualsiasi input da parte dell'utente
-	//Update rec --> variabile che contiene i dati dell'input dell'utente
-	public void onUpdateReceived(Update rec) {
-		//controllo che sia un testo e non altro tipo di input
-		if(rec.hasMessage()&&rec.getMessage().hasText()) {
-	
-			//mess --> viene inizializzata come il testo inviato dall'utente
-			String mess = rec.getMessage().getText();
-			//chat_id --> id della chat per riconoscere a quale utente stiamo rispondendo
-			long chat_id = rec.getMessage().getChatId();
-			
-			//uso switch e case -- troppi if-else-if poca efficienza
-			switch(mess) {
-			case "/markup":
-				break;
-			default:
-				//replica di default
-				defaultreply(mess,chat_id);
-				break;
-			
-			}
-			
-			
-		}
-		
-	}*/
 	
 	public Ability hello() {
 		return Ability
@@ -57,11 +31,12 @@ public class ApssInfoBot extends AbilityBot{
 				.locality(Locality.ALL)
 				.privacy(Privacy.PUBLIC)
 				.action(ctx -> silent.send("Hello world", ctx.chatId()))
-				.post(ctx-> silent.send("Bye world", ctx.chatId()))
+				.post(null)
 				.build();
 	}
 	
 	@SuppressWarnings("unchecked")
+	//warning suppressed because conflict with solutions
 	public Ability defaultreply() {
 		return Ability
 				.builder()
@@ -71,7 +46,25 @@ public class ApssInfoBot extends AbilityBot{
 				.privacy(Privacy.PUBLIC)
 				.input(0)
 				.action(ctx->silent.send("Non ho capito", ctx.chatId()))
+				.post(null)
 				.build();
 	}
+	
+	public Ability start() {		
+		
+		return Ability
+				.builder()
+				.name("start")
+				.info("Comando per iniziare a chattare")
+				.input(0)
+				.locality(Locality.ALL)
+				.privacy(Privacy.PUBLIC)
+				.action(ctx->silent.execute(AbilityCommand.start(ctx.chatId())))
+				.post(null)
+				.build();
+		
+	}
+	
+	
 
 }
