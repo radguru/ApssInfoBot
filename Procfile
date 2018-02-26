@@ -1,1 +1,1 @@
-worker: sh target/bin/worker
+worker: java -jar target/ApssInfoBot-0.1.jar
