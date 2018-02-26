@@ -4,4 +4,4 @@ Built-By: Gurpreet S. Singh (radguru)
 Created-By: Apache Maven 3.3.9
 Build-Jdk: 1.8.0_161
 Main-Class: net.odhb2018.apssinfobot.Main
-Class-Path: ./lib/ ./sqlitedb
+Class-Path: ./sqlitedb
