@@ -15,7 +15,8 @@
 	<classpathentry kind="lib" path="lib/telegrambots-abilities-3.6-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="lib/telegrambots-meta-3.6-jar-with-dependencies.jar"/>
 	<classpathentry kind="lib" path="lib/telegrambotsextensions-3.6-jar-with-dependencies.jar"/>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.21.0.jar"/>
+	<classpathentry kind="lib" path="lib/text-client-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
