@@ -106,7 +106,8 @@ public class PSqlConnection {
 			System.out.println("Impossibile connettersi: "+e.getErrorCode());
 			return 3;
 		}catch(ClassNotFoundException e) {
-			System.out.println("Impossibile connettersi: " + e.getStackTrace());
+			System.out.println("Impossibile connettersi: ");
+			e.printStackTrace();
 			return 3;
 		}
 	}
