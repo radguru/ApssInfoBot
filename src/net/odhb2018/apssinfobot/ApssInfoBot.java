@@ -66,7 +66,7 @@ public class ApssInfoBot extends AbilityBot{
 						mess.setChatId(ctx.chatId());
 						break;
 					case 3:
-						mess.setText("C'è un errore con la connessione");
+						mess.setText("C'e' un errore con la connessione");
 						mess.setChatId(ctx.chatId());
 						break;
 					case 2:

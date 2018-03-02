@@ -12,6 +12,4 @@ Feel free to change BOT_TOKEN and BOT_USERNAME if you want to create an equal bo
 
 This bot use [TelegramBots Library](https://github.com/rubenlagus/TelegramBots), you can find the library following the link
 
-## SQLite Library
-
-This bot use [SQLite Library](http://www.sqlitetutorial.net/sqlite-java/), follow the link for more info
+## MySQL Library
