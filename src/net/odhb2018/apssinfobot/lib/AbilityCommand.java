@@ -19,28 +19,36 @@ import ai.api.model.AIResponse;
 
 public class AbilityCommand   {
 	
-	public static SendMessage start(long chat_Id) {
+	public static SendMessage start(long chat_Id, int utente) {
 		//messaggio di apertura
 		SendMessage message = new SendMessage()
 				.setChatId(chat_Id)
 				.setText("Benvenuto nel servizio APSS BOT");
+		int a = PSqlConnection.writeDataBase(utente, false);
+		switch(a) {
+		default:
+			//tastiera opzioni
+			ReplyKeyboardMarkup rkM =new ReplyKeyboardMarkup();
+			//lista delle righe
+			List<KeyboardRow> keyboard =new ArrayList<>();
+			//riga della tastiera
+			KeyboardRow row = new KeyboardRow();
+			//keyboard button
+			KeyboardButton ask = new KeyboardButton();
+			ask.setText("Domanda libera?");
+			
+			//aggiungo i parametri
+			row.add(ask);
+			row.add("Categorie");
+			keyboard.add(row);
+			rkM.setKeyboard(keyboard);
+			message.setReplyMarkup(rkM);
+			break;
+		case 3:
+			message.setText("Attenzione problemi con il servizio. Per info chiamare: 848 806 806");
+			break;
+		}
 		
-		//tastiera opzioni
-		ReplyKeyboardMarkup rkM =new ReplyKeyboardMarkup();
-		//lista delle righe
-		List<KeyboardRow> keyboard =new ArrayList<>();
-		//riga della tastiera
-		KeyboardRow row = new KeyboardRow();
-		//keyboard button
-		KeyboardButton ask = new KeyboardButton();
-		ask.setText("Domanda libera?");
-		
-		//aggiungo i parametri
-		row.add(ask);
-		row.add("Categorie");
-		keyboard.add(row);
-		rkM.setKeyboard(keyboard);
-		message.setReplyMarkup(rkM);
 		return message;
 		
 	}

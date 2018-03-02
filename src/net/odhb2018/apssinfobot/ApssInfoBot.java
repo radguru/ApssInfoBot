@@ -8,7 +8,7 @@ import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 
 import net.odhb2018.apssinfobot.lib.AbilityCommand;
-import net.odhb2018.apssinfobot.lib.MySqlConnection;
+import net.odhb2018.apssinfobot.lib.PSqlConnection;
 
 public class ApssInfoBot extends AbilityBot{
 	
@@ -56,7 +56,7 @@ public class ApssInfoBot extends AbilityBot{
 					 * return 2; -> if the user isn't in the database
 					 * return 3; -> error no connection
 					*/
-					int a = MySqlConnection.readDataBase(ctx.user().id());
+					int a = PSqlConnection.readDataBase(ctx.user().id());
 					switch(a) {
 					case 1:
 						mess = AbilityCommand.faqrisposta(ctx.chatId(), API_AI_KEY ,ctx.arguments().toString());
@@ -91,7 +91,7 @@ public class ApssInfoBot extends AbilityBot{
 				.input(0)
 				.locality(Locality.ALL)
 				.privacy(Privacy.PUBLIC)
-				.action(ctx->silent.execute(AbilityCommand.start(ctx.chatId())))
+				.action(ctx->silent.execute(AbilityCommand.start(ctx.chatId(),ctx.user().id())))
 				.post(null)
 				.build();
 		

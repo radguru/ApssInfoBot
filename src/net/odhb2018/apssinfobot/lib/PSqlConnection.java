@@ -6,12 +6,10 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.Statement;
 
-public class MySqlConnection {
+public class PSqlConnection {
 	static Connection connect = null;
 	static Statement statement = null;
 	static ResultSet rs = null;
-	
-	public static String loginsql="user=radguru_infobot&password=78IO9032jk";
 	
 	/*
 	 * return 1; -> if the user is on faq mode
@@ -27,12 +25,12 @@ public class MySqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql://johnny.heliohost.org:3306/radguru_apssinfobot?"+loginsql);
+					.getConnection("jdbc:postgresql://vbreuzflblwjbg:b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f@ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k");
 			//sending SQL query
 			statement = connect.createStatement();
 			//selector rs
 			//sintassi del rs tabella
-			rs=statement.executeQuery("select * from Utenti");
+			rs=statement.executeQuery("SELECT * FROM Utenti");
 			//if it's true 
 			int a = esistenza(utente);
 			//close connection
@@ -86,14 +84,14 @@ public class MySqlConnection {
 	}
 	
 	//scrittura su database
-	public static void writeDataBase(int utente, boolean faq) {
+	public static int writeDataBase(int utente, boolean faq) {
 		try {
 			//MySql Driver
 			Class.forName("com.mysql.jdbc.Driver");
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql://johnny.heliohost.org:3306/radguru_apssinfobot?"+loginsql);
+					.getConnection("jdbc:postgresql://vbreuzflblwjbg:b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f@ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k");
 			//sending SQL query
 			statement = connect.createStatement();
 			String sql;
@@ -103,11 +101,13 @@ public class MySqlConnection {
 			int a=4;
 			//controllo chiusura
 			a=close(a);
-			
+			return a;
 		}catch(SQLException e){
 			System.out.println("Impossibile connettersi: "+e.getErrorCode());
+			return 3;
 		}catch(ClassNotFoundException e) {
 			System.out.println("Impossibile connettersi: " + e.getMessage());
+			return 3;
 		}
 	}
 	
