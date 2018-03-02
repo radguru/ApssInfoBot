@@ -63,17 +63,22 @@ public class AbilityCommand   {
 	
 	public static String apii(String key, String mess) {
 		String a = "Sicuro di essere connesso alla rete?";
-		
+		//mess="Perchè donare gli organi?";
 		AIConfiguration conf = new AIConfiguration(key);
 		
 		AIDataService data = new AIDataService(conf);
 		
-		AIRequest messaggio = new AIRequest(mess);
+		AIRequest messaggio = new AIRequest();
+		messaggio.setLanguage("it");
+		messaggio.setQuery(mess.toString());
+		
+		System.out.println(messaggio.toString());
 		
 		AIResponse risposta;
 		
 		try {
 			risposta = data.request(messaggio);
+			System.out.println(risposta.getResult().getFulfillment().getSpeech());
 			
 			if(risposta.getStatus().getCode()==200) {
 				return risposta.getResult().getFulfillment().getSpeech();

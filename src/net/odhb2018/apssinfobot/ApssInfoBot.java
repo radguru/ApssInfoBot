@@ -1,11 +1,13 @@
 package net.odhb2018.apssinfobot;
 
+import org.glassfish.jersey.message.internal.MsgTraceEvent;
 import org.telegram.abilitybots.api.bot.AbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Flag;
 import org.telegram.abilitybots.api.objects.Locality;
 import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Update;
 
 import net.odhb2018.apssinfobot.lib.AbilityCommand;
 import net.odhb2018.apssinfobot.lib.PSqlConnection;
@@ -14,7 +16,7 @@ public class ApssInfoBot extends AbilityBot{
 	
 	public static String BOT_TOKEN="507945152:AAHB1AsKcA22QrKuWGKKxOim95B27OkA7wE";
 	public static String BOT_USERNAME="ApssInfoBot";
-	public static String API_AI_KEY="c5d63d933ae2496fbf3d933aa5ce0ffb";
+	public static String API_AI_KEY="9af2fbbcd5b8483f9c01725b8a0ddfc8";
 
 	protected ApssInfoBot() {//botToken e botUsername
 		super(BOT_TOKEN, BOT_USERNAME);
@@ -55,7 +57,8 @@ public class ApssInfoBot extends AbilityBot{
 					 * return 0; -> if the user isn't on faq mode
 					 * return 2; -> if the user isn't in the database
 					 * return 3; -> error no connection
-					*/
+					 * 
+					 * 
 					int a = PSqlConnection.readDataBase(ctx.user().id());
 					switch(a) {
 					case 1:
@@ -74,8 +77,8 @@ public class ApssInfoBot extends AbilityBot{
 						mess.setText("Utente non registrato");
 						mess.setChatId(ctx.chatId());
 						break;
-					}
-					
+					}*/
+					mess=AbilityCommand.faqrisposta(ctx.chatId(), API_AI_KEY, ctx.update().getMessage().getText());
 					silent.execute(mess);
 					})
 				.post(null)
@@ -91,7 +94,13 @@ public class ApssInfoBot extends AbilityBot{
 				.input(0)
 				.locality(Locality.ALL)
 				.privacy(Privacy.PUBLIC)
-				.action(ctx->silent.execute(AbilityCommand.start(ctx.chatId(),ctx.user().id())))
+				.action(ctx->{
+					SendMessage ms =new SendMessage();
+					ms=AbilityCommand.faqrisposta(ctx.chatId(), API_AI_KEY, ctx.arguments().toString());
+					
+					silent.execute(ms);
+				//silent.execute(AbilityCommand.start(ctx.chatId(),ctx.user().id()));
+				})
 				.post(null)
 				.build();
 		

@@ -25,7 +25,8 @@ public class PSqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:postgresql://vbreuzflblwjbg:b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f@ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k");
+					.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k?sslmode=require&user=vbreuzflblwjbg&password=b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
+
 			//sending SQL query
 			statement = connect.createStatement();
 			//selector rs
@@ -91,7 +92,8 @@ public class PSqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:postgresql://vbreuzflblwjbg:b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f@ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k");
+					.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k?sslmode=require&user=vbreuzflblwjbg&password=b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
+					//.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k", "vbreuzflblwjbg", "b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
 			//sending SQL query
 			statement = connect.createStatement();
 			String sql;
