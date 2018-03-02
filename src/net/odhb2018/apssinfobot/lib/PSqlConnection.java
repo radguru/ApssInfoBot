@@ -21,7 +21,7 @@ public class PSqlConnection {
 		try {
 			
 			//MySql Driver
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
