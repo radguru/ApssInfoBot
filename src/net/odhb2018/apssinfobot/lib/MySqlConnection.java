@@ -11,7 +11,7 @@ public class MySqlConnection {
 	static Statement statement = null;
 	static ResultSet rs = null;
 	
-	public static String loginsql="user=infobot&password=Drf439Ho0";
+	public static String loginsql="user=radguru_infobot&password=78IO9032jk";
 	
 	/*
 	 * return 1; -> if the user is on faq mode
@@ -27,7 +27,7 @@ public class MySqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql://db4free.net/apssinfobot?"+loginsql);
+					.getConnection("jdbc:mysql://johnny.heliohost.org:3306/radguru_apssinfobot?"+loginsql);
 			//sending SQL query
 			statement = connect.createStatement();
 			//selector rs
@@ -93,7 +93,7 @@ public class MySqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql://db4free.net/apssinfobot?"+loginsql);
+					.getConnection("jdbc:mysql://johnny.heliohost.org:3306/radguru_apssinfobot?"+loginsql);
 			//sending SQL query
 			statement = connect.createStatement();
 			String sql;
