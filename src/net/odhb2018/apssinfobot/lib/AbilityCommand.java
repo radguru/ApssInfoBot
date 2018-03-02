@@ -8,6 +8,7 @@ import org.telegram.abilitybots.api.objects.Locality;
 import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import ai.api.AIConfiguration;
@@ -22,7 +23,7 @@ public class AbilityCommand   {
 		//messaggio di apertura
 		SendMessage message = new SendMessage()
 				.setChatId(chat_Id)
-				.setText("Cosa vuoi sapere?");
+				.setText("Benvenuto nel servizio APSS BOT");
 		
 		//tastiera opzioni
 		ReplyKeyboardMarkup rkM =new ReplyKeyboardMarkup();
@@ -30,9 +31,13 @@ public class AbilityCommand   {
 		List<KeyboardRow> keyboard =new ArrayList<>();
 		//riga della tastiera
 		KeyboardRow row = new KeyboardRow();
+		//keyboard button
+		KeyboardButton ask = new KeyboardButton();
+		ask.setText("Domanda libera?");
+		
 		//aggiungo i parametri
-		row.add("Impostazioni");
-		row.add("Informazioni");
+		row.add(ask);
+		row.add("Categorie");
 		keyboard.add(row);
 		rkM.setKeyboard(keyboard);
 		message.setReplyMarkup(rkM);

@@ -11,6 +11,8 @@ public class MySqlConnection {
 	static Statement statement = null;
 	static ResultSet rs = null;
 	
+	public static String loginsql="user=infobot&password=Drf439Ho0";
+	
 	/*
 	 * return 1; -> if the user is on faq mode
 	 * return 0; -> if the user isn't on faq mode
@@ -25,12 +27,12 @@ public class MySqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql:(url)+(utente)");
+					.getConnection("jdbc:mysql://db4free.net/apssinfobot?"+loginsql);
 			//sending SQL query
 			statement = connect.createStatement();
 			//selector rs
 			//sintassi del rs tabella
-			rs=statement.executeQuery("select * from (database)");
+			rs=statement.executeQuery("select * from Utenti");
 			//if it's true 
 			int a = esistenza(utente);
 			//close connection
@@ -91,12 +93,17 @@ public class MySqlConnection {
 			//connection
 			//TODO la sintassi del collegamento
 			connect = DriverManager
-					.getConnection("jdbc:mysql:(url)+(utente)");
+					.getConnection("jdbc:mysql://db4free.net/apssinfobot?"+loginsql);
 			//sending SQL query
 			statement = connect.createStatement();
 			String sql;
 			sql="INSERT INTO Utenti (id,faq) VALUES ("+utente+", "+faq+")";
 			statement.execute(sql);
+			
+			int a=4;
+			//controllo chiusura
+			a=close(a);
+			
 		}catch(SQLException e){
 			System.out.println("Impossibile connettersi: "+e.getErrorCode());
 		}catch(ClassNotFoundException e) {
