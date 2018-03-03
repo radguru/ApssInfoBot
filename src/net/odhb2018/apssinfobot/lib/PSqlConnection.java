@@ -1,13 +1,12 @@
 package net.odhb2018.apssinfobot.lib;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Connection;
 import java.sql.Statement;
 
+import net.odhb2018.apssinfobot.lib.khfunction.KHfunctionPSQL;
+
 public class PSqlConnection {
-	static Connection connect = null;
 	static Statement statement = null;
 	static ResultSet rs = null;
 	
@@ -20,22 +19,13 @@ public class PSqlConnection {
 	public static int readDataBase(int utente) {
 		try {
 			
-			//MySql Driver
-			Class.forName("org.postgresql.Driver");
-			//connection
-			//TODO la sintassi del collegamento
-			connect = DriverManager
-					.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k?sslmode=require&user=vbreuzflblwjbg&password=b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
-
-			//sending SQL query
-			statement = connect.createStatement();
 			//selector rs
 			//sintassi del rs tabella
-			rs=statement.executeQuery("SELECT * FROM Utenti");
+			rs=KHfunctionPSQL.dbconnection("SELECT * FROM Utenti");
 			//if it's true 
 			int a = esistenza(utente);
 			//close connection
-			a=close(a);
+			a=KHfunctionPSQL.close(a);
 			
 			//ritorno la variabile
 			return a;
@@ -65,9 +55,11 @@ public class PSqlConnection {
 				if(rs.getInt("id") == utente) {
 					if(rs.getBoolean("faq")){
 						//the user is on faq mode
+						System.out.println("faq mode= true");
 						return 1;
 					}else {
 						//the user isn't on faq mode
+						System.out.println("faq mode= false");
 						return 0;
 					}
 				}else{
@@ -76,6 +68,7 @@ public class PSqlConnection {
 				}
 			}
 			//if not while -> no connection, no control -> error
+			System.out.println("Errore return3");
 			return 3;
 		} catch (SQLException e) {
 			System.out.println("Impossibile leggere il database"+e.getErrorCode());
@@ -87,22 +80,12 @@ public class PSqlConnection {
 	//scrittura su database
 	public static int writeDataBase(int utente, boolean faq) {
 		try {
-			//MySql Driver
-			Class.forName("org.postgresql.Driver");
-			//connection
-			//TODO la sintassi del collegamento
-			connect = DriverManager
-					.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k?sslmode=require&user=vbreuzflblwjbg&password=b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
-					//.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k", "vbreuzflblwjbg", "b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
-			//sending SQL query
-			statement = connect.createStatement();
-			String sql;
-			sql="INSERT INTO Utenti (id,faq) VALUES ("+utente+", "+faq+")";
-			statement.execute(sql);
-			
+			String sql="INSERT INTO Utenti (id,faq) VALUES ("+utente+", "+faq+")";
+			KHfunctionPSQL.dbexecute(sql);
+			System.out.println("faq mode on start= false");
 			int a=4;
 			//controllo chiusura
-			a=close(a);
+			a=KHfunctionPSQL.close(a);
 			return a;
 		}catch(SQLException e){
 			System.out.println("Impossibile connettersi: "+e.getErrorCode());
@@ -114,22 +97,72 @@ public class PSqlConnection {
 		}
 	}
 	
-	private static int close(int a) {
+	public static int changeData(int utente, boolean faq) {
 		try {
-			if(rs!=null) {
-				rs.close();
-			}
-			if(statement != null) {
-				statement.close();
-			}
-			if(connect != null) {
-				connect.close();
-			}
+			String sql="UPDATE Utenti SET faq="+faq+" WHERE id="+utente;
+			KHfunctionPSQL.dbexecute(sql);
+			System.out.println("faq mode change= true");
+			int a=4;
+			//controllo chiusura
+			a=KHfunctionPSQL.close(a);
 			return a;
-		}catch(SQLException e) {
+		}catch(SQLException e){
 			System.out.println("Impossibile connettersi: "+e.getErrorCode());
+			return 3;
+		}catch(ClassNotFoundException e) {
+			System.out.println("Impossibile connettersi: ");
+			e.printStackTrace();
 			return 3;
 		}
 	}
+	
+	public static boolean find(int utente) {
+		try {
+			String sql="SELECT FROM Utenti WHERE id="+utente;
+			rs=null;
+			rs=KHfunctionPSQL.dbconnection(sql);
+			if(rs==null) {
+				System.out.println("Record non presente inseriamolo");
+				KHfunctionPSQL.closeVoid();
+				return false;
+				
+			}else {
+				System.out.println("Record già presente");
+				KHfunctionPSQL.closeVoid();
+				return true;
+			}
+		}catch(SQLException e){
+			System.out.println("Impossibile connettersi: "+e.getErrorCode());
+			return false;
+		}catch(ClassNotFoundException e) {
+			System.out.println("Impossibile connettersi: " + e.getMessage());
+			return false;
+		}
+		
+	}
+	
+	public static String readData(int id){
+		try {
+			String sql = "SELECT risposta FROM dialog where id="+id;
+			rs=null;
+			rs=KHfunctionPSQL.dbconnection(sql);
+			if(rs!=null) {
+				return rs.getString("risposta");
+			}else {
+				System.out.println("Errore di connessione");
+				return null;
+			}
+		}catch(SQLException e) {
+			e.getMessage();
+			return null;
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
+	
+	
 
 }

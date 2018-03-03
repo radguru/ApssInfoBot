@@ -4,20 +4,21 @@ import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
+//just for starting the real bot
 public class Main {
 	
 	public static void main (String[] arg0) {
 		
-		//Inizializzo API
+		//Starting the Telegram API
 		ApiContextInitializer.init();
-		//inizializzo le API di telegram
+		//Initialize Bot
 		TelegramBotsApi botsApi= new TelegramBotsApi();
 		
-		//"registro" faccio partire il bot
+		//Enrolment of the Bot
 		try {
 			botsApi.registerBot(new ApssInfoBot());
 		} catch (TelegramApiRequestException e) {
-			// TODO se il bot non viene "registrato" 
+			System.out.println("Wait there are some problem with Telegram");
 			e.printStackTrace();
 		}
 	}
