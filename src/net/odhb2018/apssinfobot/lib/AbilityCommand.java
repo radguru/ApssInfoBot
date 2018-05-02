@@ -5,11 +5,7 @@ import java.util.List;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
-
 import ai.api.AIConfiguration;
 import ai.api.AIDataService;
 import ai.api.AIServiceException;
@@ -73,9 +69,9 @@ public class AbilityCommand   {
 	}
 	
 	public static String apii(String key, String mess) {
-		String a = "Sicuro di essere connesso alla rete?";
+		String a = "Errore di connessione con i server";
 		//mess="Perche' donare gli organi?";
-		System.out.println(a);
+		//System.out.println(a);
 		System.out.println(mess);
 		AIConfiguration conf = new AIConfiguration(key);
 		
@@ -85,25 +81,21 @@ public class AbilityCommand   {
 		messaggio.setLanguage("it");
 		messaggio.setQuery(mess);
 		
-		
 		System.out.println(messaggio.toString());
 		
 		AIResponse risposta;
 		
 		try {
-			System.out.println("cdsa");
 			risposta = data.request(messaggio);
 			System.out.println("CIAO:"+risposta.getResult().getFulfillment().getSpeech());
 			
 			if(risposta.getStatus().getCode()==200) {
-				System.out.println(risposta.getResult().getFulfillment().getSpeech());
 				return risposta.getResult().getFulfillment().getSpeech();
 			}else {
 				System.out.println("ERRORE\n\n");
 				return a;
 			}
 		} catch (AIServiceException e) {
-			System.out.println("ciao");
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			return a;

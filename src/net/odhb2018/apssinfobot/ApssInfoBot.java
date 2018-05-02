@@ -5,7 +5,8 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-//Usage of AbilityBot from TelegramBot API of rubenlagus
+import net.odhb2018.apssinfobot.lib.AbilityCommand;
+
 public class ApssInfoBot extends TelegramLongPollingBot{
 	
 	/*Initialize of the token
@@ -18,34 +19,41 @@ public class ApssInfoBot extends TelegramLongPollingBot{
 	public static String API_AI_KEY="9af2fbbcd5b8483f9c01725b8a0ddfc8";
 	public static String CREATOR_ID="137084354";
 
-
 	@Override
 	public String getBotUsername() {
-		// TODO Auto-generated method stub
 		return BOT_USERNAME;
 	}
 
-
 	@Override
 	public String getBotToken() {
-		// TODO Auto-generated method stub
 		return BOT_TOKEN;
 	}
 	
 	@Override
 	public void onUpdateReceived(Update update) {
-		// TODO Auto-generated method stub
-		// We check if the update has a message and the message has text
-	    if (update.hasMessage() && update.getMessage().hasText()) {
-	        SendMessage message = new SendMessage() // Create a SendMessage object with mandatory fields
-	                .setChatId(update.getMessage().getChatId())
-	                .setText(update.getMessage().getText());
-	        try {
-	            execute(message); // Call method to send the message
-	        } catch (TelegramApiException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		if(update.hasMessage()) {
+			if(update.getMessage().isCommand()) {
+				if(update.getMessage().getText().equals("/start")) {
+					SendMessage mes = new SendMessage()
+							.setChatId(update.getMessage().getChatId())
+							.setText("Benvenuto, stai scrivendo con ApssInfoBot");
+					try {
+						execute(mes);
+					}catch(TelegramApiException e) {
+						e.printStackTrace();
+						e.getMessage();
+					}
+				}
+			}
+			else if (update.getMessage().hasText()) {
+		        SendMessage message = AbilityCommand.faqrisposta(update.getMessage().getChatId(), API_AI_KEY, update.getMessage().getText());
+		        try {
+		            execute(message);
+		        } catch (TelegramApiException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
 	}
 	
 }
