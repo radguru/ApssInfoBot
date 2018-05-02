@@ -1,17 +1,12 @@
 package net.odhb2018.apssinfobot;
 
-import org.telegram.abilitybots.api.bot.AbilityBot;
-import org.telegram.abilitybots.api.objects.Ability;
-import org.telegram.abilitybots.api.objects.Flag;
-import org.telegram.abilitybots.api.objects.Locality;
-import org.telegram.abilitybots.api.objects.Privacy;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import net.odhb2018.apssinfobot.lib.AbilityCommand;
-
 //Usage of AbilityBot from TelegramBot API of rubenlagus
-public class ApssInfoBot extends AbilityBot{
+public class ApssInfoBot extends TelegramLongPollingBot{
 	
 	/*Initialize of the token
 	 * BOT_TOKEN -> Token from BotFather of the Bot owned
@@ -21,84 +16,36 @@ public class ApssInfoBot extends AbilityBot{
 	public static String BOT_TOKEN="507945152:AAHB1AsKcA22QrKuWGKKxOim95B27OkA7wE";
 	public static String BOT_USERNAME="ApssInfoBot";
 	public static String API_AI_KEY="9af2fbbcd5b8483f9c01725b8a0ddfc8";
+	public static String CREATOR_ID="137084354";
 
-	
-	protected ApssInfoBot() {
-		super(BOT_TOKEN, BOT_USERNAME);
+
+	@Override
+	public String getBotUsername() {
+		// TODO Auto-generated method stub
+		return BOT_USERNAME;
+	}
+
+
+	@Override
+	public String getBotToken() {
+		// TODO Auto-generated method stub
+		return BOT_TOKEN;
 	}
 	
 	@Override
-	public int creatorId() {
-		return 137084354;
+	public void onUpdateReceived(Update update) {
+		// TODO Auto-generated method stub
+		// We check if the update has a message and the message has text
+	    if (update.hasMessage() && update.getMessage().hasText()) {
+	        SendMessage message = new SendMessage() // Create a SendMessage object with mandatory fields
+	                .setChatId(update.getMessage().getChatId())
+	                .setText(update.getMessage().getText());
+	        try {
+	            execute(message); // Call method to send the message
+	        } catch (TelegramApiException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
-	
-	//default operation on callback
-	@SuppressWarnings("unchecked")
-	public Ability defaultreply() {
-		return Ability
-			.builder()
-				.name("DEFAULT")
-//				.flag(Flag.CALLBACK_QUERY)
-				.locality(Locality.ALL)
-				.privacy(Privacy.PUBLIC)
-				.input(0)
-				.action(ctx->{
-					if(ctx.update().hasCallbackQuery()) {
-						//TODO funzione del call back
-						try {
-							execute(CallBackApss.CallBackOne(ctx.update()));
-						} catch (TelegramApiException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}else {
-						System.out.println("Stringa di testo");
-						SendMessage l = AbilityCommand.faqrisposta(ctx.chatId(), API_AI_KEY , ctx.update().getMessage().getText());
-						try {
-							execute(l);
-						} catch (TelegramApiException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				})
-				.post(null)
-				.build();
-	}
-	//command for /start
-	public Ability start() {		
-		
-		return Ability
-				.builder()
-				.name("start")
-				.info("Comando per iniziare a chattare")
-				.input(0)
-				.locality(Locality.ALL)
-				.privacy(Privacy.PUBLIC)
-				.action(ctx->{
-					
-						silent.execute(AbilityCommand.start(ctx.chatId(),ctx.update().getMessage().getFrom().getId()));
-				
-				})
-				.post(null)
-				.build();
-		
-	}
-	
-//	@SuppressWarnings("unchecked")
-//	public Ability defaultreply_text() {
-//		return Ability
-//			.builder()
-//				.name("DEFAULT")
-//				.flag(Flag.TEXT)
-//				.locality(Locality.USER)
-//				.privacy(Privacy.PUBLIC)
-//				.input(0)
-//				.action(ctx->{
-//					
-//				})
-//				.post(null)
-//				.build();
-//	}
 	
 }
