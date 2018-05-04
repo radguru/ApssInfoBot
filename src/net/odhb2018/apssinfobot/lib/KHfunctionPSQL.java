@@ -1,4 +1,4 @@
-package net.odhb2018.apssinfobot.lib.khfunction;
+package net.odhb2018.apssinfobot.lib;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,16 +11,11 @@ public class KHfunctionPSQL {
 	static Statement statement = null;
 	static ResultSet rs = null;
 	
-	//return of statement
 	static public ResultSet dbconnection(String querry) throws ClassNotFoundException, SQLException {
-		//MySql Driver
 		Class.forName("org.postgresql.Driver");
-		//connection
 		connect = DriverManager
 				.getConnection("jdbc:postgresql://ec2-54-75-227-92.eu-west-1.compute.amazonaws.com:5432/d6hq6uvna7lf2k?sslmode=require&user=vbreuzflblwjbg&password=b487fa3b2094992edb657448923162ef7ca68929e253c387e05d842ab6a7441f");
-		//for sending sql
 		statement= connect.createStatement();
-		
 		return statement.executeQuery(querry);
 		
 	}

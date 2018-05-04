@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import net.odhb2018.apssinfobot.lib.khfunction.KHfunctionPSQL;
+import net.odhb2018.apssinfobot.lib.KHfunctionPSQL;
 
 public class PSqlConnection {
 	static Statement statement = null;
