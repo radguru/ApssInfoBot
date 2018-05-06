@@ -6,11 +6,8 @@ import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
 public class Main {
 	public static void main (String[] arg0) {
-		//Starting the Telegram API
 		ApiContextInitializer.init();
-		//Initialize Bot
 		TelegramBotsApi botsApi= new TelegramBotsApi();
-		//Enrolment of the Bot
 		try {
 			botsApi.registerBot(new ApssInfoBot());
 		} catch (TelegramApiRequestException e) {

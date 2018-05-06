@@ -5,19 +5,15 @@ import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-import net.odhb2018.apssinfobot.lib.AbilityCommand;
+import net.odhb2018.apssinfobot.handlers.CommandsHandler;
+import net.odhb2018.apssinfobot.handlers.QuestionsHandler;
 
 public class ApssInfoBot extends TelegramLongPollingBot{
 	
-	/*Initialize of the token
-	 * BOT_TOKEN -> Token from BotFather of the Bot owned
-	 * BOT_USERNAME -> Username of this BOT
-	 * API_AI_KEY -> Token from Api.ai(DialogFlow) of the project
-	 */	
-	public static String BOT_TOKEN="507945152:AAHB1AsKcA22QrKuWGKKxOim95B27OkA7wE";
-	public static String BOT_USERNAME="ApssInfoBot";
-	public static String API_AI_KEY="9af2fbbcd5b8483f9c01725b8a0ddfc8";
-	public static String CREATOR_ID="137084354";
+	public static String BOT_TOKEN="507945152:AAHB1AsKcA22QrKuWGKKxOim95B27OkA7wE"; //BotFather (Telegram)
+	public static String BOT_USERNAME="ApssInfoBot"; //Telegram bot's username
+	public static String API_AI_KEY="9af2fbbcd5b8483f9c01725b8a0ddfc8"; //Dialogflow
+	public static String CREATOR_ID="137084354"; //Telegram creator id
 
 	@Override
 	public String getBotUsername() {
@@ -31,29 +27,28 @@ public class ApssInfoBot extends TelegramLongPollingBot{
 	
 	@Override
 	public void onUpdateReceived(Update update) {
+		String uString = update.getMessage().getText();
+		long uchatid = update.getMessage().getChatId();
+		SendMessage message;
+		message = new SendMessage().setChatId(uchatid)
+				.setText("Formato del messaggio non supportato, riprovare");
+		System.out.println(uString);
 		if(update.hasMessage()) {
 			if(update.getMessage().isCommand()) {
-				if(update.getMessage().getText().equals("/start")) {
-					SendMessage mes = new SendMessage()
-							.setChatId(update.getMessage().getChatId())
-							.setText("Benvenuto, stai scrivendo con ApssInfoBot");
-					try {
-						execute(mes);
-					}catch(TelegramApiException e) {
-						e.printStackTrace();
-						e.getMessage();
-					}
-				}
+				CommandsHandler chandler = new CommandsHandler(uString,uchatid);
+				message = chandler.Commands();
 			}
 			else if (update.getMessage().hasText()) {
-		        SendMessage message = AbilityCommand.faqrisposta(update.getMessage().getChatId(), API_AI_KEY, update.getMessage().getText());
-		        try {
-		            execute(message);
-		        } catch (TelegramApiException e) {
-		            e.printStackTrace();
-		        }
+		        message = QuestionsHandler.faqrisposta(uchatid, API_AI_KEY, uString);
 		    }
 		}
+		
+		try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+		
 	}
 	
 }
